@@ -3,7 +3,6 @@ const user = require('../database/schemes/user');
 
 const login = async (req, res) => {
     const { username, password } = req.body;
-
     user
     .findUserAuth(username, password)
     .then((user) => {
@@ -75,6 +74,23 @@ const findUserById = async(req, res) => {
           path: 'friends',
         },
       })
+      .populate({
+        path: 'chats',
+        populate: {
+          path: 'authors'
+        },
+      })
+      .populate({
+        path: 'chats',
+        populate: {
+            path: 'messages',
+            ref: 'messages',
+            populate: {
+                path: 'author',
+                ref: 'user'
+            }
+        },
+      })  
     .then((user) => {
         if (!user) {
             throw new Error ("Пользователя не существует")

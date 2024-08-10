@@ -4,7 +4,6 @@ const jwtCheck = require('../middlewares/auth').jwtCheck;
 const findUserById = require('../middlewares/auth').findUserById;
 const getUserDataByUsername = require('../middlewares/auth').getUserDataByUsername;
 
-
 const authRouter = require('express').Router();
 
 authRouter.post('/login', login);

@@ -1,16 +1,31 @@
 const sendAllUser = (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(req.userArray));
+    try {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(req.userArray));
+    }
+    catch (error) {
+        console.log(error)
+    }
 };
 
 const sendUserCreated = (req, res) => {
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(req.user));
+    try {
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(req.user));
+    }
+    catch (error) {
+        console.log(error)
+    }
   }; 
 
 const sendMe = (req, res) => {
-res.setHeader("Content-Type", "application/json");
-res.end(JSON.stringify(req.user));
+    try {
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(req.user));
+    }
+    catch (error) {
+        console.log(error)
+    }
 };  
 
 module.exports = {

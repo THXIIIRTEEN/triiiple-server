@@ -19,7 +19,6 @@ const postSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: true,
   },
   likes: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -33,80 +32,105 @@ const postSchema = new mongoose.Schema({
 
 
 postSchema.statics.findLikedUser = function(id, _id) {
-  return this.findOne({_id})
-  .populate({
-    path: "likes",
-    match: {
-      _id: id,
-    },
-  }).select("likes")
-  .then((post) => {
-    if (!post) {
-      return null
-    }
-    return post
-  });
+  try {
+    return this.findOne({_id})
+    .populate({
+      path: "likes",
+      match: {
+        _id: id,
+      },
+    }).select("likes")
+    .then((post) => {
+      if (!post) {
+        return null
+      }
+      return post
+    });
+  }
+  catch (error) {
+    console.log(error)
+  }
 };
 
 postSchema.statics.removeLike = async function(id, postID) {
-  const likes = await this.findLikedUser(id, postID);
-  const findLikes = likes.likes[0]._id
-  return this.findOne({
-  }).populate({
-    path: "likes",
-    match: {
-      _id: id,
-    },
-  })
-  .updateOne(
-    { _id: postID },
-    { $pull: { likes: { $in: [findLikes] } } }
-  ).then((result) => {
-    return(result);
-  });
+  try {
+    const likes = await this.findLikedUser(id, postID);
+    const findLikes = likes.likes[0]._id
+    return this.findOne({
+    }).populate({
+      path: "likes",
+      match: {
+        _id: id,
+      },
+    })
+    .updateOne(
+      { _id: postID },
+      { $pull: { likes: { $in: [findLikes] } } }
+    ).then((result) => {
+      return(result);
+    });
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 postSchema.statics.newLike = async function(id, postID) {
-  return this.updateOne(
-    { _id: postID },
-    { $push: { likes: { _id: id } } }
-  ).then((result) => {
-    return(result);
-  });
+  try {
+    return this.updateOne(
+      { _id: postID },
+      { $push: { likes: { _id: id } } }
+    ).then((result) => {
+      return(result);
+    });
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 postSchema.statics.findComment = function(commentID, _id) {
-  return this.findOne({_id})
-  .populate({
-    path: "comments",
-    match: {
-      _id: commentID,
-    },
-  }).select("comments")
-  .then((post) => {
-    if (!post) {
-      return null
-    }
-    return post
-  });
+  try {
+    return this.findOne({_id})
+    .populate({
+      path: "comments",
+      match: {
+        _id: commentID,
+      },
+    }).select("comments")
+    .then((post) => {
+      if (!post) {
+        return null
+      }
+      return post
+    });
+  }
+  catch (error) {
+    console.log(error)
+  }
 };
 
 postSchema.statics.deleteComment = async function(commentID, _id) {
-  const comments = await this.findComment(commentID, _id);
-  const findComments = comments.comments[0]._id
-  return this.findOne({
-  }).populate({
-    path: "comments",
-    match: {
-      _id: commentID,
-    },
-  })
-  .updateOne(
-    { _id: _id },
-    { $pull: { comments: { $in: [findComments] } } }
-  ).then((result) => {
-    return(result);
-  });
+  try {
+    const comments = await this.findComment(commentID, _id);
+    const findComments = comments.comments[0]._id
+    return this.findOne({
+    }).populate({
+      path: "comments",
+      match: {
+        _id: commentID,
+      },
+    })
+    .updateOne(
+      { _id: _id },
+      { $pull: { comments: { $in: [findComments] } } }
+    ).then((result) => {
+      return(result);
+    });
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 module.exports = mongoose.model('post', postSchema);

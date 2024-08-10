@@ -6,6 +6,7 @@ const acceptReq = require('../middlewares/friends').acceptReq;
 const declineReq = require('../middlewares/friends').declineReq;
 const deleteFriend = require('../middlewares/friends').deleteFriend;
 const sendRandomUsers = require('../middlewares/friends').sendRandomUsers;
+const findUserByUsername = require('../middlewares/friends').findUserByUsername;
 
 friendsRouter.post('/friends/request', sendFriendReq);
 friendsRouter.post('/friends/accept', acceptReq);
@@ -13,6 +14,7 @@ friendsRouter.post('/friends/random', sendRandomUsers);
 friendsRouter.delete('/friends/request', cancelFriendReq);
 friendsRouter.delete('/friends/decline', declineReq);
 friendsRouter.delete('/friends/delete', deleteFriend);
+friendsRouter.post('/friends/find', findUserByUsername)
 
 
 

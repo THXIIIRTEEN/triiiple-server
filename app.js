@@ -7,6 +7,7 @@ const { Server } = require('socket.io');
 
 const posts = require('./database/schemes/post')
 const user = require('./database/schemes/user')
+const message = require('./database/schemes/message')
 
 const PORT = 3001;
 
@@ -16,6 +17,7 @@ const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/posts');
 const friendsRouter = require('./routes/friends');
+const messangerRouter = require('./routes/messanger');
 
 connectDatabase();
 
@@ -35,7 +37,88 @@ io.on("connection", (socket) => {
         model: 'user'
         }
     });
-        io.emit('comment updated', result)
+        io.emit('comment updated', result);
+
+        return () => {
+            socket.off('update comment', {});
+        };
+    });
+
+    socket.on('send message', async () => {
+        const result = await user.find({}).populate({
+            path: 'chats',
+            populate: {
+              path: 'authors'
+            },
+          })
+          .populate({
+            path: 'chats',
+            populate: {
+                path: 'messages',
+                ref: 'messages',
+                populate: {
+                    path: 'author',
+                    ref: 'user'
+                }
+            },
+          }).select('chats');
+        io.emit('message sent', result)
+
+        return () => {
+            socket.off('send message', {});
+        };
+    });
+
+    socket.on('update friends', async () => {
+        const users = await user.find({}).select('friends').select('friend_requests')
+        .populate({
+            path: 'friend_requests',
+            populate: {
+              path: 'friend_requests',
+            },
+          })
+        .populate({
+            path: 'friends',
+            populate: {
+                path: 'friends',
+            },
+        })  
+        io.emit('friens updated', users);
+        return () => {
+            socket.off('update friends', {});
+        };
+    });
+
+    socket.on('message isRead', async (id) => {
+        const result = await message.findByIdAndUpdate(id, { isRead: true }).select('isRead');
+        const chats = await user.find({}).populate({
+            path: 'chats',
+            populate: {
+              path: 'authors'
+            },
+          })
+          .populate({
+            path: 'chats',
+            populate: {
+                path: 'messages',
+                ref: 'messages',
+                populate: {
+                    path: 'author',
+                    ref: 'user'
+                }
+            },
+          }).select('chats');
+          io.emit('isRead updated', chats);
+        return () => {
+            socket.off('message isRead', {});
+        };
+    });
+
+    socket.on('send notification', async (data) => {
+        io.emit('notification sent', data);
+        return () => {
+            socket.off('send notification', {});
+        };
     })
 });
 
@@ -47,7 +130,8 @@ app.use(
     userRouter,
     authRouter,
     postRouter,
-    friendsRouter
+    friendsRouter,
+    messangerRouter
 );
 
 app.get('/', (req, res) => {

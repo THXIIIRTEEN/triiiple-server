@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const userModel = require("./user");
 
 const messageSchema = new mongoose.Schema({
     author: {
@@ -12,11 +13,15 @@ const messageSchema = new mongoose.Schema({
     },
     text: {
         type: String,
-        required: true,
     },
     picture: {
         type: String,
         required: false,
+    },
+    isRead: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 });
 
