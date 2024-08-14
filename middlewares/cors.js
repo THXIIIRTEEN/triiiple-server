@@ -1,5 +1,5 @@
 const allowedCors = [
-    'https://triiiple.vercel.app'
+    'http://localhost:3000'
   ]; 
 
 function cors(req, res, next) {

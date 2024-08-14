@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DB_URL = 'mongodb+srv://thxiiirt13n:hqzaVVcsWbDwlTHx@cluster0.4g2bd.mongodb.net/';
+const DB_URL = 'mongodb://localhost:27013/triiiple';
 
 async function connectDatabase() {
     try {

@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const jwt = require("jsonwebtoken");
 const fsExtra = require('fs-extra');
-const { profile } = require('console');
 
 const serverURL = "http://localhost:3001";
 
