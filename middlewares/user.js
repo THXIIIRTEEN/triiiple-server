@@ -6,7 +6,7 @@ const path = require('path');
 const jwt = require("jsonwebtoken");
 const fsExtra = require('fs-extra');
 
-const serverURL = "http://localhost:3001";
+const serverURL = "http://89.191.225.116";
 
 const upload = multer({ dest: "images/" });
 

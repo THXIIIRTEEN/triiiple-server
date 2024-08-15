@@ -1,5 +1,5 @@
 const allowedCors = [
-    'http://localhost:3000'
+    'https://triiiple.ru'
   ]; 
 
 function cors(req, res, next) {

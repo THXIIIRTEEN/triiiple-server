@@ -8,7 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const { ObjectId } = require("mongodb");
 
-const serverURL = "http://localhost:3001";
+const serverURL = "http://89.191.225.116";
 const upload = multer({ dest: "images/" });
 
 const createChat = async (req, res, next) => {
