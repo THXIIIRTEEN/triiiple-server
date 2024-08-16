@@ -6,7 +6,7 @@ const path = require('path');
 const jwt = require("jsonwebtoken");
 const fsExtra = require('fs-extra');
 
-const serverURL = "http://89.191.225.116";
+const serverURL = "https://api.triiiple.ru";
 
 const upload = multer({ dest: "images/" });
 

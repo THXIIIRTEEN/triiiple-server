@@ -8,7 +8,7 @@ const { ObjectId } = require("mongodb");
 const url = require('url');
 const fsExtra = require('fs-extra');
 
-const serverURL = "http://89.191.225.116";
+const serverURL = "https://api.triiiple.ru";
 
 const upload = multer({ dest: "images/" });
 
