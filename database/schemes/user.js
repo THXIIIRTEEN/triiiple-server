@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
   },
   about_user: {
     type: String,
-    required: true,
   },
   friend_requests: [{
     type: mongoose.Schema.Types.ObjectId,
