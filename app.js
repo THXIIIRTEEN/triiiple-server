@@ -24,7 +24,8 @@ connectDatabase();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-      origin: "https://triiiple.ru"
+      origin: "https://triiiple.ru",
+      methods: ["GET", "POST"]
     }
 });
 
